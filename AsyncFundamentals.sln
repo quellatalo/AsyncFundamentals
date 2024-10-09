@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncFundamentals", "AsyncFundamentals\AsyncFundamentals.csproj", "{FF17B5A5-C223-4B91-ACE0-6C187089D120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWpfApp", "DemoWpfApp\DemoWpfApp.csproj", "{4BAFA6B0-E08F-4FBF-9DC1-D479A8DD3A87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{D46BC9FB-D9A9-4988-B964-D3D44ED0BBA7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		AsyncFundamentals.sln.DotSettings = AsyncFundamentals.sln.DotSettings
+		format-code.sh = format-code.sh
+		README.md = README.md
+		dist-clean.sh = dist-clean.sh
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF17B5A5-C223-4B91-ACE0-6C187089D120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF17B5A5-C223-4B91-ACE0-6C187089D120}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF17B5A5-C223-4B91-ACE0-6C187089D120}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF17B5A5-C223-4B91-ACE0-6C187089D120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BAFA6B0-E08F-4FBF-9DC1-D479A8DD3A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAFA6B0-E08F-4FBF-9DC1-D479A8DD3A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BAFA6B0-E08F-4FBF-9DC1-D479A8DD3A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAFA6B0-E08F-4FBF-9DC1-D479A8DD3A87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
