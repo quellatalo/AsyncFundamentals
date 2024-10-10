@@ -26,7 +26,6 @@ public class AwaitTests
             tasks[i] = DoJob(i, useAwait);
         }
 
-        s_events.Add(new EventRecord(int.MaxValue));
         Task.WhenAll(tasks).Wait();
         s_events.Add(new EventRecord(int.MaxValue, TaskStatus.RanToCompletion));
         Assert.That(s_events, useAwait ? Is.Not.Ordered : Is.Ordered);

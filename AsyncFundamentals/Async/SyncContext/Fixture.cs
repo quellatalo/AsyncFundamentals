@@ -11,9 +11,9 @@ public static class Fixture
     [OneTimeSetUp]
     public static void OneTimeSetUp()
     {
-        "Synchronization context: {SynchronizationContext.Current}".ThreadDump();
+        $"Synchronization context: {SynchronizationContext.Current}".ThreadDump();
         s_uiContext = UiContext.Start();
-        "Created context: {s_uiContext}".ThreadDump();
+        $"Created context: {s_uiContext}".ThreadDump();
     }
 
     [OneTimeTearDown]

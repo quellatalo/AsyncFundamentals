@@ -39,7 +39,8 @@ public class UiUpdateTests
     static async Task AwaitTaskUpdateUi(string updatedContent, bool continueOnCapturedContext)
     {
         $"Awaiting task ({continueOnCapturedContext})".ThreadDump();
-        Fixture.UiContext.UiContent = await Task.Run(() => updatedContent).ConfigureAwait(continueOnCapturedContext);
+        string awaitedValue = await Task.Run(() => updatedContent).ConfigureAwait(continueOnCapturedContext);
         $"Done await({continueOnCapturedContext})".ThreadDump();
+        Fixture.UiContext.UiContent = awaitedValue;
     }
 }
