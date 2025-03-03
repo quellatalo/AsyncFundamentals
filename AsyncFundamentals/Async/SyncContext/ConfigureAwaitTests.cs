@@ -17,7 +17,7 @@ public class ConfigureAwaitTests
         }
 
         $"{_continuedThread}: Synchronization context: {SynchronizationContext.Current}".Dump();
-        AwaitTaskThatPrintsRunningThread(continueOnCapturedContext).Wait();
+        AwaitTaskThatPrintsRunningThreadAsync(continueOnCapturedContext).Wait();
         Fixture.UiContext.Wait();
         Assert.That(_continuedThread, Is.Not.EqualTo(Fixture.UiContext.UiThread));
         Fixture.AssertUiHeartBeat();
@@ -28,7 +28,7 @@ public class ConfigureAwaitTests
     {
         SynchronizationContext.SetSynchronizationContext(Fixture.UiContext);
         $"{_continuedThread}: Synchronization context set: {SynchronizationContext.Current}".Dump();
-        AwaitTaskThatPrintsRunningThread(continueOnCapturedContext).Wait();
+        AwaitTaskThatPrintsRunningThreadAsync(continueOnCapturedContext).Wait();
         Fixture.UiContext.Wait();
         Assert.That(
             _continuedThread,
@@ -44,7 +44,7 @@ public class ConfigureAwaitTests
         const int SlownessMilliseconds = 1000;
         SynchronizationContext.SetSynchronizationContext(Fixture.UiContext);
         $"{_continuedThread}: Synchronization context set: {SynchronizationContext.Current}".Dump();
-        AwaitTaskThatPrintsRunningThread(continueOnCapturedContext, SlownessMilliseconds).Wait();
+        AwaitTaskThatPrintsRunningThreadAsync(continueOnCapturedContext, SlownessMilliseconds).Wait();
         Fixture.UiContext.Wait();
         Assert.That(
             _continuedThread,
@@ -58,10 +58,14 @@ public class ConfigureAwaitTests
 
     static void BusyOperation(int milliseconds) => Thread.Sleep(milliseconds);
 
-    async Task AwaitTaskThatPrintsRunningThread(bool continueOnCapturedContext, int slownessMilliseconds = 0)
+    async Task AwaitTaskThatPrintsRunningThreadAsync(
+        bool continueOnCapturedContext,
+        int slownessMilliseconds = 0,
+        CancellationToken cancellationToken = default)
     {
         $"Awaiting task ({continueOnCapturedContext})".ThreadDump();
-        await Task.Run(() => { "Task executing".ThreadDump(); }).ConfigureAwait(continueOnCapturedContext);
+        await Task.Run(() => { "Task executing".ThreadDump(); }, cancellationToken)
+            .ConfigureAwait(continueOnCapturedContext);
         _continuedThread = Environment.CurrentManagedThreadId;
         $"{_continuedThread}: Done await({continueOnCapturedContext})".Dump();
         BusyOperation(slownessMilliseconds);
