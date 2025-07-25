@@ -4,9 +4,9 @@ The behaviors of `ConfigureAwait` based on the boolean `continueOnCapturedContex
 
 # Does it matter?
 
-Yes, and no.
+It rarely matters. But when it does, it's crucial.
 
-If we do not care about the performance of our code, the default behavior will most likely bring us to the expected result.
+If we do not care about the performance and stability of our code, the default behavior will most likely bring us to the expected result.
 
 _Note: when we don't specify `ConfigureAwait`, it means we're using `ConfigureAwait(true)`.
 Yes, `continueOnCapturedContext` is `true` by default._
@@ -34,7 +34,7 @@ There are 2 test files:
 - [ConfigureAwaitTests](ConfigureAwaitTests.cs): Demonstrate how `continueOnCapturedContext` work with `SynchronizationContext`
 - [UiUpdateTests](UiUpdateTests.cs): Reproduce the behaviors when working with UI
   - When we should use `ConfigureAwait(true)`
-  - When we should use `ConfigureAwait(false`
+  - When we should use `ConfigureAwait(false)`
 
 Most of the output in our tests will have the current thread ID as prefix for us to observe the "marshaling" mentioned in the documentation.
 

@@ -16,6 +16,7 @@ public class WhenAllTests
                 // throws the first inner exception from the WhenAll task.
                 var thrownException =
                     Assert.ThrowsAsync<InvalidOperationException>(async () => await whenAllTask.ConfigureAwait(false));
+                Assert.That(whenAllTask.IsCompleted);
                 Assert.That(
                     thrownException,
                     Is.EqualTo(whenAllTask.Exception!.InnerExceptions.First())
@@ -37,7 +38,7 @@ public class WhenAllTests
         ArgumentNullException.ThrowIfNull(_taskStatuses);
         $"{id} started".Dump();
         _taskStatuses[id] = TaskStatus.Running;
-        await Task.Delay(1000).ConfigureAwait(false);
+        await Task.Delay(id * 500).ConfigureAwait(false);
         if (throwException)
         {
             _taskStatuses[id] = TaskStatus.Faulted;

@@ -15,7 +15,7 @@ public partial class MainWindow
         BtnCorrect.Content = "Retrieving...";
 
         // by default, it's .ConfigureAwait(true)
-        BtnCorrect.Content = await RetrieveStringFromBackEnd();
+        BtnCorrect.Content = await RetrieveStringFromBackEndAsync();
     }
 
     // Same as: UpdateUiContent_NotContinueOnCapturedContext_Exception
@@ -24,20 +24,22 @@ public partial class MainWindow
         BtnUi.Content = "Retrieving...";
 
         // Error!
-        BtnUi.Content = await RetrieveStringFromBackEnd().ConfigureAwait(false);
+        BtnUi.Content = await RetrieveStringFromBackEndAsync().ConfigureAwait(false);
     }
 
     // Same as: SyncContext_Slow_ContinueOnCapturedContext(true)
     async void BtnBe_OnClick(object sender, RoutedEventArgs e)
     {
         BtnBe.Content = "Retrieving...";
-        BtnBe.Content = await RetrieveStringFromBackEnd(true);
+        BtnBe.Content = await RetrieveStringFromBackEndAsync(true);
     }
 
-    static async Task<string> RetrieveStringFromBackEnd(bool backEndAwaitConfiguration = false)
+    static async Task<string> RetrieveStringFromBackEndAsync(
+        bool backEndAwaitConfiguration = false,
+        CancellationToken cancellationToken = default)
     {
         var sw = Stopwatch.StartNew();
-        await Task.Delay(10).ConfigureAwait(backEndAwaitConfiguration);
+        await Task.Delay(10, cancellationToken).ConfigureAwait(backEndAwaitConfiguration);
         SomethingTimeConsuming();
         return sw.Elapsed.ToString();
     }

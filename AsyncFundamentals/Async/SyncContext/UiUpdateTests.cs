@@ -8,7 +8,7 @@ public class UiUpdateTests
         const string UpdatedContent = nameof(UpdateUiContent_ContinueOnCapturedContext_Updated);
         SynchronizationContext.SetSynchronizationContext(Fixture.UiContext);
         $"Synchronization context set: {SynchronizationContext.Current}".ThreadDump();
-        var updateTask = AwaitTaskUpdateUi(UpdatedContent, true);
+        var updateTask = AwaitTaskUpdateUiAsync(UpdatedContent, true);
         Assert.Multiple(
             () =>
             {
@@ -24,7 +24,7 @@ public class UiUpdateTests
         const string UpdatedContent = nameof(UpdateUiContent_NotContinueOnCapturedContext_Exception);
         SynchronizationContext.SetSynchronizationContext(Fixture.UiContext);
         $"Synchronization context set: {SynchronizationContext.Current}".ThreadDump();
-        var updateTask = AwaitTaskUpdateUi(UpdatedContent, false);
+        var updateTask = AwaitTaskUpdateUiAsync(UpdatedContent, false);
         Assert.Multiple(
             () =>
             {
@@ -36,10 +36,14 @@ public class UiUpdateTests
             });
     }
 
-    static async Task AwaitTaskUpdateUi(string updatedContent, bool continueOnCapturedContext)
+    static async Task AwaitTaskUpdateUiAsync(
+        string updatedContent,
+        bool continueOnCapturedContext,
+        CancellationToken cancellationToken = default)
     {
         $"Awaiting task ({continueOnCapturedContext})".ThreadDump();
-        string awaitedValue = await Task.Run(() => updatedContent).ConfigureAwait(continueOnCapturedContext);
+        string awaitedValue = await Task.Run(() => updatedContent, cancellationToken)
+            .ConfigureAwait(continueOnCapturedContext);
         $"Done await({continueOnCapturedContext})".ThreadDump();
         Fixture.UiContext.UiContent = awaitedValue;
     }
